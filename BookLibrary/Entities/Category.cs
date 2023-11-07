@@ -8,6 +8,7 @@ public enum Category
     Fantasy,
     Horror,
     Adventure,
-    Educational
+    Educational,
+    Mystery
 }
 
