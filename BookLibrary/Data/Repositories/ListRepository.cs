@@ -36,4 +36,9 @@ public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
             
     }
+
+    public void EnsureCreated()
+    {
+        
+    }
 }

@@ -1,4 +1,5 @@
-﻿using BookLibrary.Entities;
+﻿using BookLibrary.Data;
+using BookLibrary.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookLibrary.Repositories;
@@ -6,40 +7,47 @@ namespace BookLibrary.Repositories;
 public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly DbSet<T> _dbSet;
-    private readonly DbContext _dbContext;
+    private readonly BookLibraryDbContext _bookLibraryDbContext;
 
     public event EventHandler<T>? ItemAdded;
     public event EventHandler<T>? ItemRemoved;
 
-    public SqlRepository(DbContext dbContext)
+    public SqlRepository(BookLibraryDbContext bookLibraryDbContext)
     {
-        _dbContext = dbContext;
-        _dbSet = dbContext.Set<T>();
+        _bookLibraryDbContext = bookLibraryDbContext;
+        _dbSet = _bookLibraryDbContext.Set<T>();
     }
 
     public IEnumerable<T> GetAll()
     {
         return _dbSet.OrderBy(item => item.Id).ToList();
     }
-    public T? GetById(int id)//? możliwość zwrócenia null
+    public T? GetById(int id)
     {
         return _dbSet.Find(id);
     }
-
     public void Add(T item)
     {
         _dbSet.Add(item);
+        Save();
         ItemAdded?.Invoke(this, item);
     }
-   
     public void Remove(T item)
     {
         _dbSet.Remove(item);
+        Save();
         ItemRemoved?.Invoke(this, item);
     }
-
     public void Save()
     {
-        _dbContext.SaveChanges();
+        _bookLibraryDbContext.SaveChanges();
+    }
+    public void EnsureCreated()
+    {
+        _bookLibraryDbContext.Database.EnsureCreated();
+    }
+    public IEnumerable<T> Read()
+    {
+        return _dbSet.ToList();
     }
 }

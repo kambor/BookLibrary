@@ -1,9 +1,8 @@
-﻿using BookLibrary.Components.CsvReader.Models;
+﻿using BookLibrary.Entities;
 
 namespace BookLibrary.Components.CsvReader;
 
 public interface ICsvReader
 {
-    List<Car> ProcessCars(string filePath);
-    List<Manufacturer> ProcessManufacturers(string filePath);
+    List<Book> ProcessBooks(string filePath);
 }

@@ -6,14 +6,14 @@ namespace BookLibrary.DataProviders;
 public interface IBooksProvider
 {
     // SELECT
-    List<string> GetUniqueCategory();
+    List<string> GetUniqueAuthors();
     List<Book> GetSpecificColumns();
     string AnonymousClass();
 
     // ORDER BY
-    public List<Book> OrderByAuthors();
-    public List<Book> OrderByAuthorsAndTitleDescending();
-    public List<Book> OrderByRelaseData();
+    List<Book> OrderByAuthors();
+    List<Book> OrderByAuthorsAndTitleDescending();
+    List<Book> OrderByRating();
 
     //Where
     List<Book> WhereStartsWith(string prefix);
@@ -29,15 +29,15 @@ public interface IBooksProvider
     // TAKE
     List<Book> TakeBooks(int howMany);
     List<Book> TakeBooks(Range range);
-    List<Book> TakeBooksWhileRealiseDataAfter(DateTime date);
+    List<Book> TakeBooksWhileRealiseDataAfter(int date);
 
     // SKIP
     List<Book> SkipBooks(int howMany);
-    List<Book> SkipBooksWhileRealiseDataAfter(DateTime date);
+    List<Book> SkipBooksWhileRealiseDataAfter(int date);
 
     // DISTINCT
-    List<string> DistinctAllCategories();
-    List<Book> DistinctByCategory();
+    //List<string> DistinctAllCategories();
+    //List<Book> DistinctByCategory();
 
     // CHUNK
     List<Book[]> ChunkBooks(int size);

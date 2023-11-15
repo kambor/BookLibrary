@@ -15,10 +15,14 @@ public class BooksProvider : IBooksProvider
     }
 
     //SELECT
-    public List<string> GetUniqueCategory()
+    public List<string> GetUniqueAuthors()
     {
         var books = _booksRepository.GetAll();
-        return books.Select(x => x.Category.ToString()).Distinct().ToList();
+        return books
+            .Select(x => x.Author
+            .ToString())
+            .Distinct()
+            .ToList();
     }
 
     public List<Book> GetSpecificColumns()
@@ -67,10 +71,10 @@ public class BooksProvider : IBooksProvider
             .ToList();
     }
 
-    public List<Book> OrderByRelaseData()
+    public List<Book> OrderByRating()
     {
         var books = _booksRepository.GetAll();
-        return books.OrderBy(x => x.RelaseData).ToList();
+        return books.OrderByDescending(x => x.AverageRating).ToList();
     }
 
     // WHERE
@@ -101,7 +105,7 @@ public class BooksProvider : IBooksProvider
     public Book? FirstByDate()
     {
         var books = _booksRepository.GetAll();
-        return books.OrderBy(x => x.RelaseData).FirstOrDefault();       
+        return books.OrderBy(x => x.PublicationYear).FirstOrDefault();       
     }
     public Book LastByAuthor(string author)
     {
@@ -126,7 +130,7 @@ public class BooksProvider : IBooksProvider
     {
         var books = _booksRepository.GetAll();
         return books
-            .OrderBy(x => x.Title)
+            .OrderByDescending(x => x.AverageRating)
             .Take(howMany)
             .ToList();
     }
@@ -140,12 +144,12 @@ public class BooksProvider : IBooksProvider
             .ToList();
     }
 
-    public List<Book> TakeBooksWhileRealiseDataAfter(DateTime date)
+    public List<Book> TakeBooksWhileRealiseDataAfter(int date)
     {
         var books = _booksRepository.GetAll();
         return books
-            .OrderByDescending(x => x.RelaseData)
-            .TakeWhile(x => x.RelaseData >= date)
+            .OrderByDescending(x => x.PublicationYear)
+            .TakeWhile(x => x.PublicationYear >= date)
             .ToList();
     }
 
@@ -159,34 +163,34 @@ public class BooksProvider : IBooksProvider
             .ToList();
     }
 
-    public List<Book> SkipBooksWhileRealiseDataAfter(DateTime date)
+    public List<Book> SkipBooksWhileRealiseDataAfter(int date)
     {
         var books = _booksRepository.GetAll();
         return books
-           .OrderByDescending(x => x.RelaseData)
-           .SkipWhile(x => x.RelaseData >= date)
+           .OrderByDescending(x => x.PublicationYear)
+           .SkipWhile(x => x.PublicationYear >= date)
            .ToList();
     }
 
     // DISTINCT
-    public List<string> DistinctAllCategories()
-    {
-        var books = _booksRepository.GetAll();
-        return books
-           .Select(x => x.Category.ToString())
-           .Distinct()
-           .OrderBy(c => c)
-           .ToList();
-    }
+    //public List<string> DistinctAllCategories()
+    //{
+    //    var books = _booksRepository.GetAll();
+    //    return books
+    //       .Select(x => x.Category.ToString())
+    //       .Distinct()
+    //       .OrderBy(c => c)
+    //       .ToList();
+    //}
 
-    public List<Book> DistinctByCategory()
-    {
-        var books = _booksRepository.GetAll();
-        return books
-            .DistinctBy(x => x.Category)
-            .OrderBy(X => X.Category)
-            .ToList();
-    }
+    //public List<Book> DistinctByCategory()
+    //{
+    //    var books = _booksRepository.GetAll();
+    //    return books
+    //        .DistinctBy(x => x.Category)
+    //        .OrderBy(X => X.Category)
+    //        .ToList();
+    //}
 
     // CHUNK
     public List<Book[]> ChunkBooks(int size)

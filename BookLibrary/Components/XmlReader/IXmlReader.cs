@@ -1,9 +1,9 @@
-﻿using BookLibrary.Components.CsvReader.Models;
+﻿using BookLibrary.Entities;
 
 namespace BookLibrary.Components.XmlReader;
 
 public interface IXmlReader
 {
-    public void CreateXml(List<Car> recordsCar, List<Manufacturer> recordsManufacturer);
+    public void CreateXml(List<Book> recordsBook);
     public void QueryXml(string fileName);
 }

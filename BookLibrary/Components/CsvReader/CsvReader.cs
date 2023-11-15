@@ -1,44 +1,22 @@
 ﻿using BookLibrary.Components.CsvReader.Extensions;
-using BookLibrary.Components.CsvReader.Models;
+using BookLibrary.Entities;
 
 namespace BookLibrary.Components.CsvReader;
 
 public class CsvReader : ICsvReader
 {
-    public List<Car> ProcessCars(string filePath)
+    public List<Book> ProcessBooks(string filePath)
     {
         if(!File.Exists(filePath))
         {
-            return new List<Car>();
+            return new List<Book>();
         }
 
-        var cars = File.ReadAllLines(filePath)
+        var books = File.ReadAllLines(filePath)
             .Skip(1)
             .Where(x => x.Length > 1)
-            .ToCar();
+            .ToBook();
 
-        return cars.ToList();
-    }
-
-    public List<Manufacturer> ProcessManufacturers(string filePath)
-    {
-        if (!File.Exists(filePath))
-        {
-            return new List<Manufacturer>();
-        }
-
-        var manufacturers = File.ReadAllLines(filePath)
-           .Where(x => x.Length > 1)
-           .Select(x =>
-           {
-               var colimns = x.Split(',');
-               return new Manufacturer()
-               {
-                   Name = colimns[0],
-                   Country = colimns[1],
-                   Year = int.Parse(colimns[2])
-               };
-           });
-        return manufacturers.ToList();
+        return books.ToList();
     }
 }

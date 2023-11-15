@@ -5,19 +5,20 @@ namespace BookLibrary.Entities;
 
 public class Book : EntityBase
 {
-    public string? Title { get; set; }
+    public string? Isbn { get; set; }
     public string? Author { get; set; }
-    public DateTime? RelaseData { get; set; }  
-    public Category Category { get; set; }
-    public bool IsAvailable { get; set; }
-     
+    public int? PublicationYear { get; set; }
+    public string? Title { get; set; }
+    public double? AverageRating { get; set; }
+    public string? ImageUrl { get; set; }
+
 
     public override string ToString()
     {
         StringBuilder sb = new(1024);
-        sb.AppendLine($"ID: {Id}");
+        sb.AppendLine($"ID: {Id}, Isbn: {Isbn}");
         sb.AppendLine($"    Title: {Title}  Authors: {Author}");
-        sb.AppendLine($"    Category: {Category}  Relase: {RelaseData.Value.ToShortDateString()}");
+        sb.AppendLine($"    Relase: {PublicationYear}   Rating: {AverageRating}");
       
         return sb.ToString();
     }
