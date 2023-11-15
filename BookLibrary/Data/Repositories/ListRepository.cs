@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Entities;
-
 namespace BookLibrary.Repositories;
 
 public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()

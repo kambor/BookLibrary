@@ -1,5 +1,4 @@
 ﻿using BookLibrary.Services;
-
 namespace BookLibrary;
 
 public class App : IApp
@@ -15,7 +14,6 @@ public class App : IApp
     public void Run()
     {
         _eventHandler.SubscribeToEvents();
-
         _userCommunication.CommunicationWithUser();      
     }
 }

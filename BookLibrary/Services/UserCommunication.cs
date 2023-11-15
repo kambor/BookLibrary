@@ -2,15 +2,11 @@
 using BookLibrary.DataProviders;
 using BookLibrary.Entities;
 using BookLibrary.Repositories;
-using BookLibrary.Repositories.Extensions;
-using System.Text.Json;
 
 namespace BookLibrary.Services;
 
 public class UserCommunication : UserComunicationBase, IUserCommunication
 {
-    //string auditFileName = "Audit_DataLog.txt";
-
     private readonly IRepository<Book> _booksRepository;
     private readonly IBooksProvider _booksProvider;
     private readonly ICsvReader _csvReader;

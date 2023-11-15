@@ -1,6 +1,5 @@
 ﻿using BookLibrary.Entities;
 using BookLibrary.Repositories;
-using System.Drawing;
 using System.Text;
 
 namespace BookLibrary.DataProviders;
