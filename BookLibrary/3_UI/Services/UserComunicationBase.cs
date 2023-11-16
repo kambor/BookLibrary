@@ -9,7 +9,7 @@ public abstract class UserComunicationBase
         return userInput;
     }
 
-    protected T? GetValueFromUser<T>(string comment) where T : struct
+    protected T GetValueFromUser<T>(string comment) where T : struct
     {
         while (true)
         {

@@ -12,6 +12,7 @@ public class App : IApp
         _userCommunication = userCommunication;
         _eventHandler = eventHandler;
     }
+
     public void Run()
     {
         _eventHandler.SubscribeToEvents();

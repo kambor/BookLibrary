@@ -28,9 +28,21 @@ public class BooksProvider : IBooksProvider
         return books.OrderByDescending(x => x.AverageRating).ToList();
     }
 
-    public List<Book> WhereAuthorIs(string author)
+    public List<Book> ShowBooksWhereAuthorIs(string author)
     {
         var books = _booksRepository.GetAll();
-        return books.Where(x => x.Author == author).ToList();
+        return books
+            .Where(x => x.Author == author)
+            .OrderBy(x => x.Title)
+            .ToList();
+    }
+
+    public List<Book> TakeBooks(Range range)
+    {
+        var books = _booksRepository.GetAll();
+        return books
+            .OrderBy(x => x.Id)
+            .Take(range)
+            .ToList();
     }
 }

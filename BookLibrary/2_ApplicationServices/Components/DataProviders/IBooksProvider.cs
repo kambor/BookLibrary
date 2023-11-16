@@ -6,5 +6,6 @@ public interface IBooksProvider
 {
     List<string> GetUniqueAuthors();
     List<Book> OrderByRating();
-    List<Book> WhereAuthorIs(string author);
+    List<Book> ShowBooksWhereAuthorIs(string author);
+    List<Book> TakeBooks(Range range);
 }

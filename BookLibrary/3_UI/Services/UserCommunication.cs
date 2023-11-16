@@ -36,9 +36,13 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
             Console.WriteLine("3 - Remove book.");
             Console.WriteLine("4 - Find book by id.");
             Console.WriteLine("5 - Show books ordered by rating.");
-            Console.WriteLine("6 - Show unique authors.");     
-            Console.WriteLine("7 - Import data from CSV file.");
+            Console.WriteLine("6 - Show unique authors.");
+            Console.WriteLine("7 - Show the author's books.");
+            Console.WriteLine("8 - Show books from range.");
+            Console.WriteLine("9 - Import data from CSV file.");
             Console.WriteLine("Q - Close App.");
+
+            CheckLibrary();
 
             var userInput = GetInputFromUser("Chose key: ").ToUpper();
 
@@ -47,11 +51,9 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
                 case "1":
                     ReadAllBooks();
                     break;
-
                 case "2":
                     AddBook();
                     break;
-
                 case "3":                  
                     DeleteBook();
                     break;
@@ -59,12 +61,18 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
                     FindBookByID("Enter the number of books to display (intiger): ");
                     break;
                 case "5":
-                    ImportDataFromCsv();
+                    OrderByRating();
                     break;
                 case "6":
                     ShowUniqueAuthors();
                     break;
                 case "7":
+                    ShowBooksInsertAutor();
+                    break;
+                case "8":
+                    ShowSomeBooks();
+                    break;
+                case "9":
                     ImportDataFromCsv();
                     break;
                 case "Q":
@@ -77,22 +85,43 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
             }
         }
     }
-    public void OrderByRating()
+    private void CheckLibrary()
     {
-        if (_booksRepository.GetAll().Any())
+        if (!_booksRepository.GetAll().Any())
         {
-            foreach (var book in _booksProvider.OrderByRating())
-            {
-                Console.WriteLine(book);
-            }
-        }
-        else
-        {
-            Console.WriteLine("Library is empty");
+            Console.WriteLine("Library is empty, you should inport data first. \n Select 9 to import data. ");
         }
     }
 
-    public void ShowUniqueAuthors()
+    private void ShowSomeBooks()
+    {
+        var fisrstValue = GetValueFromUser<int>("Enter the starting value of the range:  ");
+        var secondValue = GetValueFromUser<int>("Enter the end value of the range:  ");
+
+        foreach (var book in _booksProvider.TakeBooks(fisrstValue..secondValue))
+        {
+            Console.WriteLine(book);
+        }    
+    }
+
+    private void ShowBooksInsertAutor()
+    {
+        var authorName = GetInputFromUser("Enter the author name: ");
+        foreach (var book in _booksProvider.ShowBooksWhereAuthorIs(authorName))
+        {
+            Console.WriteLine(book);
+        }
+    }
+
+    private void OrderByRating()
+    {
+        foreach (var book in _booksProvider.OrderByRating())
+        {
+            Console.WriteLine(book);
+        }
+    }
+
+    private void ShowUniqueAuthors()
     {
         if (_booksRepository.GetAll().Any())
         {
@@ -117,6 +146,7 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
             _booksRepository.Add(record);
         }
     }
+
     private void ReadAllBooks()
     {
         var booksFromDb = _booksRepository.GetAll();
@@ -139,24 +169,6 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
 
         _booksRepository.Add(book);      
         _booksRepository.Save();
-    }
-
-    private void FindBookWhereAuthorIs()
-    {
-        var userInput = GetInputFromUser("Enter the Author of books to display: ");
-        var bookList = _booksProvider.WhereAuthorIs(userInput);
-
-        if(bookList != null)
-        {
-            foreach (var book in bookList)
-            {
-                Console.WriteLine(book);
-            }
-        }
-        else
-        {
-            Console.WriteLine("There is no book by this author in the library!");
-        }       
     }
 
     private Book? FindBookByID(string comment)
@@ -198,7 +210,7 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
         }
     }
 
-    public static List<Book> GenerateSampleBooks()
+    public static List<Book> GenerateSampleBooksToListRepository()
     {
         return new List<Book>
         {
@@ -302,6 +314,4 @@ public class UserCommunication : UserComunicationBase, IUserCommunication
             }
         };
     }
-
-    
 }
