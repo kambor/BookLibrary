@@ -1,13 +1,14 @@
-﻿using BookLibrary;
-using BookLibrary.Components.CsvReader;
-using BookLibrary.Components.XmlReader;
-using BookLibrary.Data;
-using BookLibrary.DataProviders;
-using BookLibrary.Entities;
-using BookLibrary.Repositories;
-using BookLibrary.Services;
+﻿using BookLibrary.ApplicationServices.Components.CsvReader;
+using BookLibrary.ApplicationServices.Components.DataProviders;
+using BookLibrary.ApplicationServices.Components.XmlReader;
+using BookLibrary.DataAccess.Data;
+using BookLibrary.DataAccess.Data.Entities;
+using BookLibrary.DataAccess.Data.Repositories;
+using BookLibrary.UI;
+using BookLibrary.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
 
 var services = new ServiceCollection();
 services.AddSingleton<IApp, App> ();
@@ -16,7 +17,7 @@ services.AddSingleton<IBooksProvider, BooksProvider>();
 services.AddSingleton<IUserCommunication, UserCommunication>();
 services.AddSingleton<ICsvReader, CsvReader>();
 services.AddSingleton<IXmlReader, XmlReader>();
-services.AddSingleton<IEventHandler, BookLibrary.Services.EventHandler>();
+services.AddSingleton<IEventHandler, BookLibrary.UI.Services.EventHandler>();
 
 
 services.AddDbContext<BookLibraryDbContext>(options => options

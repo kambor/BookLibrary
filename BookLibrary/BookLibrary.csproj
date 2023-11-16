@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\DataProviders\Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\Files\books.csv">
+    <None Update="1_DataAccess\Resources\Files\books.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
